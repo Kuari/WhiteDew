@@ -97,7 +97,7 @@ export const constantRoutes = [{
       component: () => import('@/views/annex/index'),
       meta: {
         title: '附件',
-        icon: 'dashboard'
+        icon: 'annex'
       }
     }]
   },
@@ -112,7 +112,7 @@ export const constantRoutes = [{
       component: () => import('@/views/user/index'),
       meta: {
         title: '用户',
-        icon: 'dashboard'
+        icon: 'user'
       }
     }]
   },
@@ -124,7 +124,7 @@ export const constantRoutes = [{
     name: '页面',
     meta: {
       title: '页面',
-      icon: 'example'
+      icon: 'page'
     },
     children: [{
         path: 'pagelist',
@@ -141,7 +141,7 @@ export const constantRoutes = [{
         component: () => import('@/views/addpage/index'),
         meta: {
           title: '新增页面',
-          icon: 'tree'
+          icon: 'addpage'
         }
       }
     ]
@@ -157,7 +157,7 @@ export const constantRoutes = [{
       component: () => import('@/views/system/index'),
       meta: {
         title: '系统',
-        icon: 'dashboard'
+        icon: 'system'
       }
     }]
   },
