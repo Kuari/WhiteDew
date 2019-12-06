@@ -1,94 +1,24 @@
 <template>
-    <div :class="className" :style="{height:height,width:width}" />
+  <ve-pie :data="chartData" :settings="chartSettings"></ve-pie>
 </template>
 
 <script>
-import echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
-import resize from './mixins/resize'
-
 export default {
-    mixins: [resize],
-    props: {
-        className: {
-            type: String,
-            default: 'chart'
-        },
-        width: {
-            type: String,
-            default: '100%'
-        },
-        height: {
-            type: String,
-            default: '350px'
-        },
-        chrome: {
-            type: Number,
-            default: 80
-        },
-        firefox: {
-            type: Number,
-            default: 97
-        },
-        ie: {
-            type: Number,
-            default: 36
-        },
-        safari: {
-            type: Number,
-            default: 57
-        }
-    },
-    data() {
-        return {
-            chart: null,
-        }
-    },
-    mounted() {
-        this.$nextTick(() => {
-            this.initChart()
-        })
-    },
-    beforeDestroy() {
-        if (!this.chart) {
-            return
-        }
-        this.chart.dispose()
-        this.chart = null
-    },
-    methods: {
-        initChart() {
-            this.chart = echarts.init(this.$el, 'macarons')
-
-            this.chart.setOption({
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{a} <br/>{b} : {c} ({d}%)'
-                },
-                legend: {
-                    left: 'center',
-                    bottom: '10',
-                    data: ['Chrome', 'Firefox', 'IE', 'Safari']
-                },
-                series: [
-                    {
-                        name: '访问浏览器比例图',
-                        type: 'pie',
-                        roseType: 'radius',
-                        radius: [15, 95],
-                        center: ['50%', '38%'],
-                        data: [
-                            { value: this.chrome, name: 'Chrome' },
-                            { value: this.firefox, name: 'Firefox' },
-                            { value: this.ie, name: 'IE' },
-                            { value: this.safari, name: 'Safari' },
-                        ],
-                        animationEasing: 'cubicInOut',
-                        animationDuration: 2600
-                    }
-                ]
-            })
-        }
-    }
-}
+  data() {
+    this.chartSettings = {
+      roseType: "radius"
+    };
+    return {
+      chartData: {
+        columns: ["浏览器", "访问数量"],
+        rows: [
+          { 浏览器: "Chrome", 访问数量: 3903 },
+          { 浏览器: "Firefox", 访问数量: 3530 },
+          { 浏览器: "Safari", 访问数量: 2923 },
+          { 浏览器: "IE", 访问数量: 1723 }
+        ]
+      }
+    };
+  }
+};
 </script>
