@@ -115,6 +115,12 @@ export default {
           finish: false,
           show: true,
           edit: false
+        },
+        {
+          task: '后台页面开发8',
+          finish: false,
+          show: true,
+          edit: false
         }
       ]
     }

@@ -60,16 +60,31 @@ export const constantRoutes = [{
 {
   path: '/article',
   component: Layout,
-  redirect: '/article',
+  redirect: '/article/articlelist',
+  name: '文章',
+  meta: {
+    title: '文章',
+    icon: 'article'
+  },
   children: [{
-    path: 'article',
-    name: 'article',
-    component: () => import('@/views/article/index'),
+    path: 'articlelist',
+    name: 'articlelist',
+    component: () => import('@/views/articleList/index'),
     meta: {
-      title: '文章',
-      icon: 'article'
+      title: '文章管理',
+      icon: 'option'
     }
-  }]
+  },
+  {
+    path: 'addarticle',
+    name: 'addarticle',
+    component: () => import('@/views/addArticle/index'),
+    meta: {
+      title: '新增文章',
+      icon: 'addpage'
+    }
+  }
+  ]
 },
 
 {
@@ -111,7 +126,7 @@ export const constantRoutes = [{
     name: 'user',
     component: () => import('@/views/user/index'),
     meta: {
-      title: '用户',
+      title: '个人信息',
       icon: 'user'
     }
   }]
@@ -131,8 +146,8 @@ export const constantRoutes = [{
     name: 'pagelist',
     component: () => import('@/views/pagelist/index'),
     meta: {
-      title: '页面列表',
-      icon: 'table'
+      title: '页面管理',
+      icon: 'option'
     }
   },
   {

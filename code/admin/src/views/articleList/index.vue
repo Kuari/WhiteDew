@@ -17,33 +17,26 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" />
-      <el-table-column label="文章名" width="250">
+      <el-table-column label="文章名" width="400" sortable>
         <template slot-scope="scope">{{ scope.row.article | articleNameLength }}</template>
       </el-table-column>
-      <el-table-column label="状态" width="80">
+      <el-table-column label="状态" width="80" sortable>
         <template slot-scope="scope">
           <el-tag
             :type="scope.row.status | transArticleStatusTag"
           >{{ scope.row.status | transArticleStatus }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="分类" width="80">
-        <template slot-scope="scope">
-          <el-tag>{{ scope.row.classification }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="tag" label="标签" width="250">
-        <template slot-scope="scope">
-          <el-tag
-            v-for="(item, index) in scope.row.tag.slice(0, 3)"
-            :key="index"
-            class="tag"
-          >{{ item }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="click" label="点击" width="50" />
-      <el-table-column prop="comment" label="评论" width="50" />
-      <el-table-column prop="time" label="时间" width="200" />
+      <el-table-column
+        prop="classification"
+        label="分类"
+        column-key="classification"
+        :filters="classificationList"
+        :filter-method="tableFilterHandler"
+      />
+      <el-table-column prop="click" label="点击" />
+      <el-table-column prop="comment" label="评论" />
+      <el-table-column prop="time" label="时间" width="200" sortable />
       <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -76,7 +69,7 @@ export default {
       }
     },
     transArticleStatusTag(status) {
-      // 转换文章状态的标签 0-未发布 1-已经发布 2-回收站
+      // 转换文章状态的标签 0-未发布 1-已经发布
       switch (status) {
         case 0:
           return 'info'
@@ -85,8 +78,8 @@ export default {
       }
     },
     articleNameLength(article) {
-      // 文章名长度限制，限制为10
-      if (article.length > 15) return article.substring(0, 15) + '...'
+      // 文章名长度限制，限制为120
+      if (article.length > 20) return article.substring(0, 20) + '...'
       return article
     }
   },
@@ -96,8 +89,7 @@ export default {
         {
           article: '1明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词1',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -105,8 +97,7 @@ export default {
         {
           article: '2明月几时有，把酒问青天',
           status: 0,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词1',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -114,8 +105,7 @@ export default {
         {
           article: '3明月几时有，把酒问青天',
           status: 0,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词2',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -123,8 +113,7 @@ export default {
         {
           article: '4明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词3',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -132,8 +121,7 @@ export default {
         {
           article: '5明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词2',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -141,8 +129,7 @@ export default {
         {
           article: '6明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词1',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -150,8 +137,7 @@ export default {
         {
           article: '7明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词1',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -159,8 +145,7 @@ export default {
         {
           article: '8明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词2',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -168,8 +153,7 @@ export default {
         {
           article: '9明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词2',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -177,8 +161,7 @@ export default {
         {
           article: '10明月几时有，把酒问青天',
           status: 0,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词1',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -186,8 +169,7 @@ export default {
         {
           article: '11明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词1',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -195,8 +177,7 @@ export default {
         {
           article: '12明月几时有，把酒问青天',
           status: 0,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词1',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -204,8 +185,7 @@ export default {
         {
           article: '13明月几时有，把酒问青天',
           status: 0,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词2',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -213,8 +193,7 @@ export default {
         {
           article: '14明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词2',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -222,8 +201,7 @@ export default {
         {
           article: '15明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词1',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -231,8 +209,7 @@ export default {
         {
           article: '16明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词1',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -240,8 +217,7 @@ export default {
         {
           article: '17明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词2',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -249,8 +225,7 @@ export default {
         {
           article: '18明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词2',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -258,8 +233,7 @@ export default {
         {
           article: '19明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词1',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -267,8 +241,7 @@ export default {
         {
           article: '20明月几时有，把酒问青天',
           status: 0,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词1',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -276,8 +249,7 @@ export default {
         {
           article: '21明月几时有，把酒问青天',
           status: 1,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词1',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -285,8 +257,7 @@ export default {
         {
           article: '22明月几时有，把酒问青天',
           status: 0,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词1',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
@@ -294,14 +265,14 @@ export default {
         {
           article: '23明月几时有，把酒问青天',
           status: 0,
-          classification: '宋词',
-          tag: ['宋词', '苏轼', '明月'],
+          classification: '宋词2',
           click: 300,
           comment: 200,
           time: '2019-12-6 10:00'
         }
       ],
       multipleSelection: [],
+      classificationList: [],
       pagesize: 10,
       currentPage: 1
     }
@@ -324,9 +295,24 @@ export default {
   },
   created() {
     this.total = this.lists.length
+    this.fetchData()
   },
 
   methods: {
+    fetchData() {
+      const beforeClassificationList = []
+      this.lists.forEach(item => {
+        if (beforeClassificationList.indexOf(item.classification) === -1) {
+          beforeClassificationList.push(item.classification)
+        }
+      })
+      beforeClassificationList.forEach(item => {
+        this.classificationList.push({
+          text: item,
+          value: item
+        })
+      })
+    },
     toggleSelection(rows) {
       if (rows) {
         rows.forEach(row => {
@@ -348,7 +334,7 @@ export default {
       this.lists.splice(val, 1)
     },
     deleteArticle() {
-      this.$confirm('此操作将删除该文件, 是否继续?', '提示', {
+      this.$confirm('此操作将删除选中文章, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -375,15 +361,16 @@ export default {
     },
     changeCurrent(current) {
       this.currentPage = current
+    },
+    tableFilterHandler(value, row, column) {
+      const property = column['property']
+      return row[property] === value
     }
   }
 }
 </script>
 
 <style scoped>
-.tag {
-  margin-right: 2px;
-}
 div.optionTool {
   margin: 20px 0;
 }
