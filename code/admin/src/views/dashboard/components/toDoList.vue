@@ -2,11 +2,11 @@
   <div class="toListPanel">
     <!-- 输入框 -->
     <div class="pushList" @keyup.enter="addTask">
-      <input type="text" placeholder="To Do" class="toDoInput" v-model="task" />
+      <input v-model="task" type="text" placeholder="To Do" class="toDoInput">
     </div>
     <!-- 输入框 结束-->
     <div v-for="(item, index) in lists" :key="index">
-      <div v-if="item.show">
+      <div v-if="item.show" class="listNode">
         <el-row class="listitem">
           <!-- 任务完成的选择框 -->
           <el-col :span="4">
@@ -25,8 +25,8 @@
           <el-col :span="16">
             <!-- 双击时候可以编辑 -->
             <div v-if="item.edit">
-              <el-input class="editInput" v-model="item.task">
-                <el-button slot="append" icon="el-icon-check" @click="editTask(item.task)"></el-button>
+              <el-input v-model="item.task" class="editInput">
+                <el-button slot="append" icon="el-icon-check" @click="editTask(item.task)" />
               </el-input>
             </div>
             <div v-else>
@@ -45,7 +45,6 @@
             </div>
           </el-col>
         </el-row>
-        <hr style="color: #f2f2f2;" />
       </div>
     </div>
     <!-- 面板尾部 todo信息 -->
@@ -58,65 +57,74 @@
 
 <script>
 export default {
+  filters: {
+    taskNameLength(value) {
+      if (value.length > 20) return value.substring(0, 20) + '...'
+      return value
+    }
+  },
   data() {
     return {
-      task: "",
+      task: '',
       taskNumber: 0,
       lists: [
         {
-          task: "白露接口文档",
+          task: '白露接口文档',
           finish: true,
           show: true,
           edit: false
         },
         {
-          task: "后台页面开发1",
+          task: '后台页面开发1',
           finish: true,
           show: true,
           edit: false
         },
         {
-          task: "后台页面开发2",
+          task: '后台页面开发2',
           finish: false,
           show: true,
           edit: false
         },
         {
-          task: "后台页面开发3",
+          task: '后台页面开发3',
           finish: false,
           show: true,
           edit: false
         },
         {
-          task: "后台页面开发4",
+          task: '后台页面开发4',
           finish: false,
           show: true,
           edit: false
         },
         {
-          task: "后台页面开发5",
+          task: '后台页面开发5',
           finish: false,
           show: true,
           edit: false
         },
         {
-          task: "后台页面开发6",
+          task: '后台页面开发6',
           finish: false,
           show: true,
           edit: false
         },
         {
-          task: "后台页面开发7",
+          task: '后台页面开发7',
           finish: false,
           show: true,
           edit: false
         }
       ]
-    };
+    }
+  },
+  mounted() {
+    this.fetchData()
   },
   methods: {
     fetchData() {
-      this.taskNumber = this.lists.length;
+      this.taskNumber = this.lists.length
     },
     addTask() {
       // 添加todo任务
@@ -125,49 +133,40 @@ export default {
           task: this.task,
           finish: false,
           show: true
-        });
-        this.task = "";
-        this.taskNumber += 1;
+        })
+        this.task = ''
+        this.taskNumber += 1
       } else {
-        this.$message("任务不能为空");
+        this.$message('任务不能为空')
       }
     },
     deleteTask(task) {
       // 删除task任务
       this.lists.forEach((item, index) => {
-        if (item.task == task) {
-          this.lists[index].show = false;
-          this.taskNumber -= 1;
+        if (item.task === task) {
+          this.lists[index].show = false
+          this.taskNumber -= 1
         }
-      });
+      })
     },
     finishTask(task) {
       // 完成任务
       this.lists.forEach((item, index) => {
-        if (item.task == task) {
-          this.lists[index].finish = !this.lists[index].finish;
+        if (item.task === task) {
+          this.lists[index].finish = !this.lists[index].finish
         }
-      });
+      })
     },
     editTask(task) {
       // 开启编辑任务
       this.lists.forEach((item, index) => {
-        if (item.task == task) {
-          this.lists[index].edit = !this.lists[index].edit;
+        if (item.task === task) {
+          this.lists[index].edit = !this.lists[index].edit
         }
-      });
+      })
     }
-  },
-  filters: {
-    taskNameLength(value) {
-      if (value.length > 20) return value.substring(0, 20) + "...";
-      return value;
-    }
-  },
-  mounted() {
-    this.fetchData()
   }
-};
+}
 </script>
 
 <style scoped>
@@ -207,7 +206,10 @@ div.toDoFooter {
   text-decoration-line: line-through;
 }
 .editInput {
-  /* padding: 15px 10px; */
   width: 100%;
+}
+div.listNode {
+  border: none;
+  border-bottom: 1px solid #f2f2f2;
 }
 </style>

@@ -31,143 +31,143 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [{
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
+  path: '/login',
+  component: () => import('@/views/login/index'),
+  hidden: true
+},
 
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
+{
+  path: '/404',
+  component: () => import('@/views/404'),
+  hidden: true
+},
 
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: {
-        title: '仪表盘',
-        icon: 'dashboard'
-      }
-    }]
-  },
-
-  {
-    path: '/article',
-    component: Layout,
-    redirect: '/article',
-    children: [{
-      path: 'article',
-      name: 'article',
-      component: () => import('@/views/article/index'),
-      meta: {
-        title: '文章',
-        icon: 'article'
-      }
-    }]
-  },
-
-  {
-    path: '/comment',
-    component: Layout,
-    redirect: '/comment',
-    children: [{
-      path: 'comment',
-      name: 'comment',
-      component: () => import('@/views/comment/index'),
-      meta: {
-        title: '评论',
-        icon: 'comment'
-      }
-    }]
-  },
-
-  {
-    path: '/annex',
-    component: Layout,
-    redirect: '/annex',
-    children: [{
-      path: 'annex',
-      name: 'annex',
-      component: () => import('@/views/annex/index'),
-      meta: {
-        title: '附件',
-        icon: 'annex'
-      }
-    }]
-  },
-
-  {
-    path: '/user',
-    component: Layout,
-    redirect: '/user',
-    children: [{
-      path: 'user',
-      name: 'user',
-      component: () => import('@/views/user/index'),
-      meta: {
-        title: '用户',
-        icon: 'user'
-      }
-    }]
-  },
-
-  {
-    path: '/singlepage',
-    component: Layout,
-    redirect: '/singlepage/pagelist',
-    name: '页面',
+{
+  path: '/',
+  component: Layout,
+  redirect: '/dashboard',
+  children: [{
+    path: 'dashboard',
+    name: 'dashboard',
+    component: () => import('@/views/dashboard/index'),
     meta: {
-      title: '页面',
-      icon: 'page'
-    },
-    children: [{
-        path: 'pagelist',
-        name: 'pagelist',
-        component: () => import('@/views/pagelist/index'),
-        meta: {
-          title: '页面列表',
-          icon: 'table'
-        }
-      },
-      {
-        path: 'addpage',
-        name: 'addpage',
-        component: () => import('@/views/addpage/index'),
-        meta: {
-          title: '新增页面',
-          icon: 'addpage'
-        }
-      }
-    ]
-  },
+      title: '仪表盘',
+      icon: 'dashboard'
+    }
+  }]
+},
 
-  {
-    path: '/system',
-    component: Layout,
-    redirect: '/system',
-    children: [{
-      path: 'system',
-      name: 'system',
-      component: () => import('@/views/system/index'),
-      meta: {
-        title: '系统',
-        icon: 'system'
-      }
-    }]
-  },
+{
+  path: '/article',
+  component: Layout,
+  redirect: '/article',
+  children: [{
+    path: 'article',
+    name: 'article',
+    component: () => import('@/views/article/index'),
+    meta: {
+      title: '文章',
+      icon: 'article'
+    }
+  }]
+},
 
-  // 404 page must be placed at the end !!!
+{
+  path: '/comment',
+  component: Layout,
+  redirect: '/comment',
+  children: [{
+    path: 'comment',
+    name: 'comment',
+    component: () => import('@/views/comment/index'),
+    meta: {
+      title: '评论',
+      icon: 'comment'
+    }
+  }]
+},
+
+{
+  path: '/annex',
+  component: Layout,
+  redirect: '/annex',
+  children: [{
+    path: 'annex',
+    name: 'annex',
+    component: () => import('@/views/annex/index'),
+    meta: {
+      title: '附件',
+      icon: 'annex'
+    }
+  }]
+},
+
+{
+  path: '/user',
+  component: Layout,
+  redirect: '/user',
+  children: [{
+    path: 'user',
+    name: 'user',
+    component: () => import('@/views/user/index'),
+    meta: {
+      title: '用户',
+      icon: 'user'
+    }
+  }]
+},
+
+{
+  path: '/singlepage',
+  component: Layout,
+  redirect: '/singlepage/pagelist',
+  name: '页面',
+  meta: {
+    title: '页面',
+    icon: 'page'
+  },
+  children: [{
+    path: 'pagelist',
+    name: 'pagelist',
+    component: () => import('@/views/pagelist/index'),
+    meta: {
+      title: '页面列表',
+      icon: 'table'
+    }
+  },
   {
-    path: '*',
-    redirect: '/404',
-    hidden: true
+    path: 'addpage',
+    name: 'addpage',
+    component: () => import('@/views/addpage/index'),
+    meta: {
+      title: '新增页面',
+      icon: 'addpage'
+    }
   }
+  ]
+},
+
+{
+  path: '/system',
+  component: Layout,
+  redirect: '/system',
+  children: [{
+    path: 'system',
+    name: 'system',
+    component: () => import('@/views/system/index'),
+    meta: {
+      title: '系统',
+      icon: 'system'
+    }
+  }]
+},
+
+// 404 page must be placed at the end !!!
+{
+  path: '*',
+  redirect: '/404',
+  hidden: true
+}
 ]
 
 const createRouter = () => new Router({

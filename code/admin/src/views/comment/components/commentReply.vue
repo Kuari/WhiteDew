@@ -7,11 +7,11 @@
       </div>
       <div class="replay">
         <el-input
+          v-model="replay"
           type="textarea"
           :autosize="{ minRows: 2, maxRows: 4}"
           placeholder="回复"
-          v-model="replay"
-        ></el-input>
+        />
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancelReply">取 消</el-button>
@@ -28,32 +28,28 @@ export default {
       type: Boolean,
       default: false
     },
-    username: {
-      type: String
-    },
-    comment: {
-      type: String
-    }
+    username: String,
+    comment: String
   },
   data() {
     return {
-      replay: "",
-      formLabelWidth: "120px",
+      replay: '',
+      formLabelWidth: '120px',
       dialogVisibleData: this.dialogVisible
-    };
+    }
   },
   methods: {
     cancelReply() {
-      this.replay = "";
-      this.dialogVisibleData = false;
+      this.replay = ''
+      this.dialogVisibleData = false
     },
     submitReply() {
-      this.dialogVisibleData = false;
-      console.log("heihei");
-      this.replay = "";
+      this.dialogVisibleData = false
+      console.log('heihei')
+      this.replay = ''
     }
-  },
-};
+  }
+}
 </script>
 
 <style scoped>

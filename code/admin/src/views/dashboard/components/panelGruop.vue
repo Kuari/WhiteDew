@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import countTo from "vue-count-to";
+import countTo from 'vue-count-to'
 
 export default {
   components: {
@@ -53,30 +53,30 @@ export default {
     return {
       lists: [
         {
-          icon: "history",
-          title: "历史访问人数",
+          icon: 'history',
+          title: '已注册用户数',
           count: this.history
         },
         {
-          icon: "usercount",
-          title: "今日访问人数",
+          icon: 'usercount',
+          title: '今日访问人数',
           count: this.user
         },
         {
-          icon: "eyecount",
-          title: "今日请求次数",
+          icon: 'eyecount',
+          title: '今日请求次数',
           count: this.request
         },
         {
-          icon: "online",
-          title: "当前在线人数",
+          icon: 'online',
+          title: '当前在线人数',
           count: this.online
         }
       ]
-    };
+    }
   },
   methods: {}
-};
+}
 </script>
 
 <style scoped>

@@ -2,7 +2,7 @@
   <div class="bg">
     <div class="dashBoardContainer">
       <div class="line">
-        <panelGroup></panelGroup>
+        <panelGroup />
       </div>
       <div class="line panel">
         <lineChart />
@@ -44,18 +44,18 @@
 </template>
 
 <script>
-import panelGroup from "./components/panelGruop";
-import pieChart from "./components/pieChart";
-import lineChart from "./components/lineChart";
-import histogram from "./components/Histogram";
-import lineChart2 from "./components/lineChart2";
+import panelGroup from './components/panelGruop'
+import pieChart from './components/pieChart'
+import lineChart from './components/lineChart'
+import histogram from './components/Histogram'
+import lineChart2 from './components/lineChart2'
 
-import recentComment from "../../components/PagePlugin/recentComment";
-import toDoList from "./components/toDoList";
-import optionlog from "./components/optionLog";
+import recentComment from '../../components/PagePlugin/recentComment'
+import toDoList from './components/toDoList'
+import optionlog from './components/optionLog'
 
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
   components: {
     panelGroup,
     pieChart,
@@ -66,7 +66,7 @@ export default {
     toDoList,
     optionlog
   }
-};
+}
 </script>
 
 <style scoped>
