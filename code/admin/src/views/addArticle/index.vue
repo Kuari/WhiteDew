@@ -69,40 +69,29 @@
       </span>
 
       <el-form-item>
-        <div class="hideHeader" @click="headerStatus = !headerStatus">
-          <i :class="headerStatus ? 'el-icon-arrow-up':'el-icon-arrow-down'" />
-          {{ headerStatus? '隐藏详细设置' : '展开详细设置' }}
-        </div>
+        <el-divider>
+          <a @click="headerStatus = !headerStatus">
+            <i :class="headerStatus ? 'el-icon-arrow-up':'el-icon-arrow-down'" />
+            {{ headerStatus? '隐藏详细设置' : '展开详细设置' }}
+          </a>
+        </el-divider>
       </el-form-item>
     </el-form>
 
-    <!-- 富文本编辑器 -->
-    <div class="markdownEdit">
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-input v-model="input" type="textarea" :rows="50" placeholder="请使用markdown语法编写~" />
-        </el-col>
-        <el-col :span="12">
-          <vue-markdown :source="input" />
-        </el-col>
-      </el-row>
-    </div>
-    <!-- 富文本编辑器 结束 -->
+    <markdownEdit />
+
   </div>
 </template>
 
 <script>
-import VueMarkdown from 'vue-markdown'
-import Prism from 'prismjs'
-import '../../../node_modules/prismjs/themes/prism.css'
+import markdownEdit from './components/markdownEdit'
 
 export default {
   components: {
-    VueMarkdown
+    markdownEdit
   },
   data() {
     return {
-      input: '### 请使用markdown语法编写~ 8-)',
       headerStatus: false,
       form: {
         title: '',
@@ -152,9 +141,7 @@ export default {
       inputValue: ''
     }
   },
-  updated() {
-    Prism.highlightAll()
-  },
+
   methods: {
     onSubmit(formName, status) {
       // 提交和保存 status: 0-保存为草稿 1-提交并发布
