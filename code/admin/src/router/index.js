@@ -133,36 +133,6 @@ export const constantRoutes = [{
 },
 
 {
-  path: '/singlepage',
-  component: Layout,
-  redirect: '/singlepage/pagelist',
-  name: '页面',
-  meta: {
-    title: '页面',
-    icon: 'page'
-  },
-  children: [{
-    path: 'pagelist',
-    name: 'pagelist',
-    component: () => import('@/views/pagelist/index'),
-    meta: {
-      title: '页面管理',
-      icon: 'option'
-    }
-  },
-  {
-    path: 'addpage',
-    name: 'addpage',
-    component: () => import('@/views/addpage/index'),
-    meta: {
-      title: '新增页面',
-      icon: 'addpage'
-    }
-  }
-  ]
-},
-
-{
   path: '/system',
   component: Layout,
   redirect: '/system',
