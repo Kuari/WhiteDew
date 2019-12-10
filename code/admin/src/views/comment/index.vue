@@ -1,34 +1,39 @@
 <template>
   <div class="container">
     <div class="optionTool">
-      <el-button
-        type="danger"
-        icon="el-icon-delete"
-        :disabled="deleteCommentBtn | transBoolen"
-        @click="deleteComment"
-      >删除({{ multipleSelection.length }})</el-button>
-    </div>
+      <el-row><el-col :span="12">
+                <el-button
+                  type="danger"
+                  icon="el-icon-delete"
+                  :disabled="deleteCommentBtn? true : false"
+                  @click="deleteComment"
+                >删除({{ multipleSelection.length }})</el-button>
+              </el-col>
+        <el-col :span="12">
+          <el-input v-model="search" placeholder="搜索评论" />
+        </el-col>
+      </el-row></div>
     <el-table
       ref="multipleTable"
-      :data="separateLists"
+      :data="tableData"
       tooltip-effect="dark"
       style="width: 100%"
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" />
       <el-table-column label="评论" width="400">
-        <template slot-scope="scope">{{ scope.row.comment | commentNameLength }}</template>
+        <template slot-scope="scope">{{ scope.row.comment>20? scope.row.comment.substring(0, 20) + '...' : scope.row.comment }}</template>
       </el-table-column>
       <el-table-column label="状态" width="80">
         <template slot-scope="scope">
           <el-tag
-            :type="scope.row.status | transCommentStatusTag"
-          >{{ scope.row.status | transCommentStatus }}</el-tag>
+            :type="scope.row.status? 'success': 'info'"
+          >{{ scope.row.status? '已公开' : '未公开' }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="username" label="用户" width="80" />
       <el-table-column label="所属文章" width="100">
-        <template slot-scope="scope">{{ scope.row.article | articleNameLength }}</template>
+        <template slot-scope="scope">{{ scope.row.article>10? scope.row.article.substring(0, 10) + '...' : scope.row.article }}</template>
       </el-table-column>
       <el-table-column prop="time" label="时间" width="200" />
       <el-table-column fixed="right" label="操作" width="300">
@@ -38,14 +43,14 @@
           <el-button
             size="mini"
             type="success"
-            :disabled="scope.row.status | transBoolen"
+            :disabled="scope.row.status? true : false"
             @click="handlePublic(scope.$index, scope.row)"
           >公开</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <div class="footer">
+    <div v-show="!search" class="footer">
       <el-pagination
         background
         layout="prev, pager, next"
@@ -104,40 +109,6 @@
 export default {
   components: {
     // commentreply
-  },
-  filters: {
-    transCommentStatus(status) {
-      // 转换评论状态 0-未审核 1-已公开
-      switch (status) {
-        case 0:
-          return '未审核'
-        case 1:
-          return '已公开'
-      }
-    },
-    transCommentStatusTag(status) {
-      // 转换评论状态的标签 0-未审核 1-已公开
-      switch (status) {
-        case 0:
-          return 'info'
-        case 1:
-          return 'success'
-      }
-    },
-    commentNameLength(Comment) {
-      // 评论名长度限制，限制为20
-      if (Comment.length > 20) return Comment.substring(0, 20) + '...'
-      return Comment
-    },
-    articleNameLength(article) {
-      // 文章名长度限制，限制为10
-      if (article.length > 10) return article.substring(0, 10) + '...'
-      return article
-    },
-    transBoolen(number) {
-      if (number === 1) return true
-      return false
-    }
   },
   data() {
     return {
@@ -298,7 +269,8 @@ export default {
         dialogVisible: false,
         username: '',
         comment: ''
-      }
+      },
+      search: ''
     }
   },
   computed: {
@@ -309,8 +281,15 @@ export default {
       }
       return true
     },
-    separateLists() {
-      // 分页后的列表，直接在html里面写表达式导致无法选中的bug
+    tableData() {
+      const search = this.search
+      if (search) {
+        return this.lists.filter(data => {
+          return Object.keys(data).some(key => {
+            return String(data[key]).toLowerCase().indexOf(search) > -1
+          })
+        })
+      }
       return this.lists.slice(
         (this.currentPage - 1) * this.pagesize,
         this.currentPage * this.pagesize

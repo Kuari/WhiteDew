@@ -49,7 +49,7 @@ export default {
         'https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg',
         'https://fuss10.elemecdn.com/2/11/6535bcfb26e4c79b48ddde44f4b6fjpeg.jpeg'
       ],
-      urls2: [
+      urlList: [
         {
           name: 'heihei',
           url: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg'
@@ -84,18 +84,17 @@ export default {
   methods: {
     beforeUpload(file) {
       const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
 
       if (!isJPG) {
         this.$message.error('上传头像图片只能是 JPG 格式!')
       }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
+      return isJPG
     },
     handleUploadSuccess() {
       console.log('success')
+    },
+    handleUrlList() {
+      this.urlList.forEach()
     }
   }
 }

@@ -1,30 +1,39 @@
 <template>
   <div class="container">
     <div class="optionTool">
-      <el-button type="primary" icon="el-icon-edit">写文章</el-button>
-      <el-button
-        type="danger"
-        icon="el-icon-delete"
-        :disabled="deleteArticleBtn"
-        @click="deleteArticle"
-      >删除({{ multipleSelection.length }})</el-button>
+      <el-row>
+        <el-col :span="12">
+          <div class="buttonGroup">
+            <el-button type="primary" icon="el-icon-edit">写文章</el-button>
+            <el-button
+              type="danger"
+              icon="el-icon-delete"
+              :disabled="deleteArticleBtn"
+              @click="deleteArticle"
+            >删除({{ multipleSelection.length }})</el-button>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div class="searchInput"><el-input v-model="search" placeholder="搜索" /></div>
+        </el-col>
+      </el-row>
     </div>
     <el-table
       ref="multipleTable"
-      :data="separateLists"
+      :data="tableData"
       tooltip-effect="dark"
       style="width: 100%"
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" />
       <el-table-column label="文章名" width="400" sortable>
-        <template slot-scope="scope">{{ scope.row.article | articleNameLength }}</template>
+        <template slot-scope="scope">{{ scope.row.article.length > 20? scope.row.article.substring(0, 20) + '...' : scope.row.article }}</template>
       </el-table-column>
       <el-table-column label="状态" width="80" sortable>
         <template slot-scope="scope">
           <el-tag
-            :type="scope.row.status | transArticleStatusTag"
-          >{{ scope.row.status | transArticleStatus }}</el-tag>
+            :type="scope.row.status? 'success' : 'info'"
+          >{{ scope.row.status? '已发布' : '未发布' }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -44,7 +53,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="footer">
+    <div v-show="!search" class="footer">
       <el-pagination
         background
         layout="prev, pager, next"
@@ -58,31 +67,6 @@
 
 <script>
 export default {
-  filters: {
-    transArticleStatus(status) {
-      // 转换文章状态 0-未发布 1-已经发布
-      switch (status) {
-        case 0:
-          return '未发布'
-        case 1:
-          return '已发布'
-      }
-    },
-    transArticleStatusTag(status) {
-      // 转换文章状态的标签 0-未发布 1-已经发布
-      switch (status) {
-        case 0:
-          return 'info'
-        case 1:
-          return 'success'
-      }
-    },
-    articleNameLength(article) {
-      // 文章名长度限制，限制为120
-      if (article.length > 20) return article.substring(0, 20) + '...'
-      return article
-    }
-  },
   data() {
     return {
       lists: [
@@ -274,7 +258,8 @@ export default {
       multipleSelection: [],
       classificationList: [],
       pagesize: 10,
-      currentPage: 1
+      currentPage: 1,
+      search: ''
     }
   },
   computed: {
@@ -285,8 +270,15 @@ export default {
       }
       return true
     },
-    separateLists() {
-      // 分页后的列表，直接在html里面写表达式导致无法选中的bug
+    tableData() {
+      const search = this.search
+      if (search) {
+        return this.lists.filter(data => {
+          return Object.keys(data).some(key => {
+            return String(data[key]).toLowerCase().indexOf(search) > -1
+          })
+        })
+      }
       return this.lists.slice(
         (this.currentPage - 1) * this.pagesize,
         this.currentPage * this.pagesize
