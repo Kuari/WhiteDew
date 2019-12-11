@@ -135,16 +135,31 @@ export const constantRoutes = [{
 {
   path: '/system',
   component: Layout,
-  redirect: '/system',
+  redirect: '/article/system',
+  name: '系统',
+  meta: {
+    title: '系统',
+    icon: 'system'
+  },
   children: [{
     path: 'system',
     name: 'system',
     component: () => import('@/views/system/index'),
     meta: {
-      title: '系统',
-      icon: 'system'
+      title: '基础设置',
+      icon: 'option'
     }
-  }]
+  },
+  {
+    path: 'menu',
+    name: 'menu',
+    component: () => import('@/views/menu/index'),
+    meta: {
+      title: '菜单设置',
+      icon: 'menu'
+    }
+  }
+  ]
 },
 
 // 404 page must be placed at the end !!!

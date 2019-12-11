@@ -9,8 +9,8 @@
           <el-form-item label="网站名称" prop="name" required>
             <el-input v-model="systemSettingForm.name" />
           </el-form-item>
-          <el-form-item label="网站地址">
-            <el-input v-model="systemSettingForm.domain" placeholder="请输入内容" prop="domain" required>
+          <el-form-item label="网站地址" required>
+            <el-input v-model="systemSettingForm.domain" placeholder="请输入内容" prop="domain">
               <el-select slot="prepend" v-model="systemSettingForm.protocol" placeholder="请选择" class="protocolSelect">
                 <el-option label="https://" value="1" />
                 <el-option label="http://" value="2" />
