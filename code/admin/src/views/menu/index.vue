@@ -50,9 +50,9 @@
         <draggable v-model="lists">
           <transition-group>
             <div v-for="(item, index) in lists" :key="item.name">
-              <el-card shadow="never" class="card">
+              <el-card shadow="hover" class="card">
                 <span class="cardOption"><i class="el-icon-rank" /></span>
-                {{ item.name }} <span class="menuSubInfo">{{ item.menuType }} - {{ item.value.length>10? item.value.slice(0, 10) + '...' : item.value }}</span>
+                {{ item.name }} <span class="menuSubInfo">{{ item.value.length>10? item.value.slice(0, 10) + '...' : item.value }}</span>
                 <span class="cardDelete"><i class="el-icon-delete" @click="deleteMenu(index)" /></span>
               </el-card>
             </div>
@@ -133,6 +133,9 @@ export default {
 </script>
 
 <style scoped>
+.card {
+  margin-bottom: 3px;
+}
 .cardOption {
     float: left;
     margin-right: 10px;

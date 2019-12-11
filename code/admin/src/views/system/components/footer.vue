@@ -43,6 +43,11 @@ export default {
         ]
       }
     }
+  },
+  methods: {
+    onSubmit() {
+      console.log('submit')
+    }
   }
 }
 </script>
