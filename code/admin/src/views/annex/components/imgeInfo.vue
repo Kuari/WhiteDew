@@ -103,7 +103,7 @@ export default {
       var clipboard = new Clipboard(val)
       clipboard.on('success', e => {
         this.$message({
-          message: '复制图片地址成功',
+          message: '复制成功',
           type: 'success'
         })
         clipboard.destroy()
